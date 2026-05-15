@@ -1,17 +1,20 @@
 package com.pluralsight.contract;
 
+import com.pluralsight.dealership.Vehicle;
+
 public abstract class Contract {
     private String date;
-    private String name;
-    private String email;
-    private boolean isSold;
+    private String customerName;
+    private String customerEmail;
+    private Vehicle vehicleSold;
 
-    public Contract(String date, String name, String email, boolean isSold) {
+    public Contract(String date, String customerName, String customerEmail, Vehicle vehicleSold) {
         this.date = date;
-        this.name = name;
-        this.email = email;
-        this.isSold = isSold;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.vehicleSold = vehicleSold;
     }
+
 
     public String getDate() {
         return date;
@@ -21,31 +24,31 @@ public abstract class Contract {
         this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
-    public boolean isSold() {
-        return isSold;
+    public Vehicle getVehicleSold() {
+        return vehicleSold;
     }
 
-    public void setSold(boolean sold) {
-        isSold = sold;
+    public void setVehicleSold(Vehicle vehicleSold) {
+        this.vehicleSold = vehicleSold;
     }
 
-    public abstract double getTotalPrice(double price);
+    public abstract double getTotalPrice();
 
-    public abstract double getMonthlyPayment(double price);
+    public abstract double getMonthlyPayment();
 }
