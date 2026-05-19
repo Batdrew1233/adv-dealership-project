@@ -1,5 +1,10 @@
 package com.pluralsight.dealership;
 
+import com.pluralsight.contract.Contract;
+import com.pluralsight.contract.ContractDataManager;
+import com.pluralsight.contract.LeaseContract;
+import com.pluralsight.contract.SalesContract;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,6 +31,7 @@ public class UserInterface {
             System.out.println("7. Get all vehicles");
             System.out.println("8. Add vehicle");
             System.out.println("9. Remove vehicle");
+            System.out.println("10. Sell/Lease vehicle ");
             System.out.println("99. Quit");
 
             System.out.print("Enter your choice: ");
@@ -58,6 +64,9 @@ public class UserInterface {
                     break;
                 case "9":
                     processRemoveVehicleRequest();
+                    break;
+                case "10":
+                    processSellOrLeaseVehicleRequest();
                     break;
                 case "99":
                     quit = true;
@@ -192,6 +201,70 @@ public class UserInterface {
         for (Vehicle vehicle : vehicles) {
             System.out.println(vehicle.toString());
         }
+    }
+
+    private void processSellOrLeaseVehicleRequest() {
+        System.out.println("Enter vin number of the vehicle: ");
+        int vehicleVin = scanner.nextInt();
+        scanner.nextLine();
+
+        Vehicle selectedVehicle = null;
+
+        for (Vehicle vehicle : dealership.getAllVehicles()){
+            if (vehicle.getVin() == vehicleVin){
+                selectedVehicle = vehicle;
+                break;
+            }
+        }
+        if (selectedVehicle == null){
+            System.out.println("Vehicle not found.");
+            return;
+        }
+
+        System.out.println("What is your name?: ");
+        String name = scanner.nextLine();
+        System.out.println("What is your email?: ");
+        String email = scanner.nextLine();
+        System.out.println("Enter date: ");
+        String date = scanner.nextLine();
+        System.out.println("SALE or LEASE: ");
+        String contractType = scanner.nextLine();
+
+        Contract contract = null;
+
+        if(contractType.equalsIgnoreCase("sale")){
+            double salesTax = selectedVehicle.getPrice()*0.05;
+            double recordingFee = 100.00;
+
+            double processingFee;
+            if (selectedVehicle.getPrice()< 10000){
+                processingFee = 295.00;
+            }else{
+                processingFee =495.00;
+            }
+
+            System.out.println("Finance? yes/no: ");
+            boolean finance = scanner.nextLine().equalsIgnoreCase("yes");
+
+            contract = new SalesContract(date, name, email, selectedVehicle,salesTax,recordingFee, processingFee, finance);
+        } else if (contractType.equalsIgnoreCase("lease")) {
+            double expectedEndingValue = selectedVehicle.getPrice() * 0.50;
+            double leaseFee = selectedVehicle.getPrice() * 0.07;
+
+            contract = new LeaseContract(date, name, email, selectedVehicle, expectedEndingValue, leaseFee);
+
+        }else {
+            System.out.println("I dont recognize this function.");
+            return;
+        }
+        ContractDataManager manager = new ContractDataManager();
+        manager.saveContract(contract);
+        dealership.removeVehicle(selectedVehicle);
+
+        DealershipFileManager dealershipManager = new DealershipFileManager();
+        dealershipManager.saveDealership(dealership);
+
+        System.out.println("Contract saved and vehicle removed from inventory.");
     }
 
 }
