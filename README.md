@@ -41,7 +41,11 @@ Follow these steps to get your application running within IntelliJ IDEA:
 - Scanner Class
 
 ## Demo
-
+![Screenshot 2026-05-20 at 12.14.15 AM.png](Screenshot%202026-05-20%20at%2012.14.15%E2%80%AFAM.png)
+![Screenshot 2026-05-20 at 12.14.31 AM.png](Screenshot%202026-05-20%20at%2012.14.31%E2%80%AFAM.png)
+![download (8).gif](download%20%288%29.gif)
+![Screenshot 2026-05-20 at 12.25.00 AM.png](Screenshot%202026-05-20%20at%2012.25.00%E2%80%AFAM.png)
+![Screenshot 2026-05-20 at 12.25.40 AM.png](Screenshot%202026-05-20%20at%2012.25.40%E2%80%AFAM.png)
 
 ## Future Work
 - Improve user experience.
